@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: mail-service
+  mail:
+    username: nelly.astafeva@yandex.ru
+    # ${MAIL_USERNAME}
+    # nelly.astafeva@yandex.ru
+    password: gfdvubuayihssrxw
+    # ${MAIL_PASSWORD}
+    # gfdvubuayihssrxw
+    host: smtp.yandex.ru
+    # ${MAIL_HOST}
+    # smtp.yandex.ru
+    port: 465
+    # ${MAIL_PORT}
+    # 465
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          # PORT 465
+          # starttls:
+          #   enable: true
+          # PORT 587
+    debug: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      auto-offset-reset: earliest
+      group-id: example123
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      max-poll-records: 1
+      fetch-max-wait: 36000
+      enable-auto-commit: false
+      client-id: example
+    listener:
+      poll-timeout: 5000
+      concurrency: 1
+      ack-mode: manual_immediate
