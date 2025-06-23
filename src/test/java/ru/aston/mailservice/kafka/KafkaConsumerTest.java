@@ -8,14 +8,14 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import ru.aston.mailservice.service.MailServiceImpl;
 
-import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @DirtiesContext
-@EmbeddedKafka(partitions = 1, brokerProperties = { "listeners=PLAINTEXT://localhost:9092", "port=9092" })
+@EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9093", "port=9093"})
 public class KafkaConsumerTest {
 
     @Autowired
@@ -23,9 +23,6 @@ public class KafkaConsumerTest {
 
     @MockBean
     private MailServiceImpl mailService;
-
-    @MockBean
-    private JavaMailSender mailSender;
 
     @Test
     public void whenCreateMessageReceived_thenSendAddEmail() throws Exception {
@@ -43,5 +40,15 @@ public class KafkaConsumerTest {
         kafkaTemplate.send("USERS", "remove", email);
 
         verify(mailService, timeout(5000)).sendEmailAboutDelete(email);
+    }
+
+    @Test
+    public void whenUnknownMessageReceived_thenSendDeleteEmail() throws Exception {
+        String email = "test@example.com";
+
+        kafkaTemplate.send("USERS", "unk", email);
+
+        verify(mailService, after(5000).never()).sendEmailAboutDelete(email);
+        verify(mailService, after(5000).never()).sendEmailAboutAdd(email);
     }
 }

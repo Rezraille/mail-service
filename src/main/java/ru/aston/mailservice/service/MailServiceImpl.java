@@ -18,6 +18,7 @@ public class MailServiceImpl{
 
     @Value("${spring.mail.username}")
     private String from;
+
     @Autowired
     private  JavaMailSender mailSender;
 

@@ -3,9 +3,9 @@ package ru.aston.mailservice.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -17,7 +17,7 @@ class MailServiceImplTest {
     @Autowired
     private MailServiceImpl mailService;
 
-    @SpyBean
+    @MockitoSpyBean
     private JavaMailSender mailSender;
 
     @Test

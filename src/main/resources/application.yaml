@@ -2,28 +2,17 @@ spring:
   application:
     name: mail-service
   mail:
-    username: nelly.astafeva@yandex.ru
-    # ${MAIL_USERNAME}
-    # nelly.astafeva@yandex.ru
-    password: gfdvubuayihssrxw
-    # ${MAIL_PASSWORD}
-    # gfdvubuayihssrxw
+    username: ${USER_NAME}
+    password: ${PASSWORD}
     host: smtp.yandex.ru
-    # ${MAIL_HOST}
-    # smtp.yandex.ru
     port: 465
-    # ${MAIL_PORT}
-    # 465
     properties:
       mail:
         smtp:
           auth: true
           ssl:
             enable: true
-          # PORT 465
-          # starttls:
-          #   enable: true
-          # PORT 587
+
     debug: true
   kafka:
     bootstrap-servers: localhost:9092
