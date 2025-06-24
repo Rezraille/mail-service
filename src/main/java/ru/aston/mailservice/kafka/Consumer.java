@@ -29,13 +29,12 @@ public class Consumer {
                         final Acknowledgment acknowledgment
     ) {
         logger.info("consume() key = {}, message = {}", key, message);
-        if ("create".equals(key)) {
+        if (Command.CREATE.is(key)) {
             mailService.sendEmailAboutAdd(message);
-        } else if ("remove".equals(key)) {
+        } else if (Command.DELETE.is(key)) {
             mailService.sendEmailAboutDelete(message);
         }
 
         acknowledgment.acknowledge();
-
     }
 }
